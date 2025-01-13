@@ -8,8 +8,8 @@ import android.widget.SimpleAdapter
 import com.blanke.mdwechat.Common
 import com.blanke.mdwechat.settings.api.APIManager
 import com.blanke.mdwechat.settings.bean.WechatConfig
-import com.blankj.utilcode.util.FileIOUtils
-import com.blankj.utilcode.util.ToastUtils
+//import com.blankj.utilcode.util.FileIOUtils
+//import com.blankj.utilcode.util.ToastUtils
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.joshcai.mdwechat.R
@@ -27,7 +27,7 @@ object DownloadWechatDialog {
                 object : Callback {
                     override fun onFailure(call: Call?, e: IOException?) {
                         progressDialog.dismiss()
-                        ToastUtils.showLong("下载微信配置列表失败," + e?.message)
+                        //ToastUtils.showLong("下载微信配置列表失败," + e?.message)
                     }
 
                     override fun onResponse(call: Call?, response: Response) {
@@ -60,13 +60,13 @@ object DownloadWechatDialog {
                                 val item = data[position]
                                 APIManager().downloadWechatConfig(item.url, object : Callback {
                                     override fun onFailure(call: Call?, e: IOException?) {
-                                        ToastUtils.showLong("下载微信配置文件失败," + e?.message)
+                                        //ToastUtils.showLong("下载微信配置文件失败," + e?.message)
                                     }
 
                                     override fun onResponse(call: Call?, response: Response) {
                                         val outputPath = Common.APP_DIR_PATH + Common.CONFIG_WECHAT_DIR
-                                        val succ = FileIOUtils.writeFileFromString("$outputPath/${item.name}", response.body()?.string())
-                                        ToastUtils.showLong("下载微信配置文件${item.name}${if (succ) "成功" else "失败"}")
+                                        //val succ = FileIOUtils.writeFileFromString("$outputPath/${item.name}", response.body()?.string())
+                                        //ToastUtils.showLong("下载微信配置文件${item.name}${if (succ) "成功" else "失败"}")
                                     }
                                 })
                             }

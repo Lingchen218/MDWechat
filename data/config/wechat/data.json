@@ -1,5 +1,10 @@
 [
   {
+    "name": "8.0.55.config",
+    "desc": "8.0.55 国内版",
+    "url": "https://github.com/Lingchen218/MDWechat/raw/v4.0/data/config/wechat/8.0.55/8.0.55.config"
+  },
+  {
     "name": "8.0.32.config",
     "desc": "8.0.32 国内版",
     "url": "https://gitee.com/JoshCai/MDWechat/raw/v4.0/data/config/wechat/8.0.32/8.0.32.config"

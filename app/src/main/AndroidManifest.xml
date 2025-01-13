@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.joshcai.mdwechat">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNA" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <queries>
+        <package android:name="com.tencent.mm"/>
+    </queries>
     <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
@@ -18,7 +20,10 @@
         android:icon="@mipmap/mdwechat_icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:requestLegacyExternalStorage="true"
+        android:preserveLegacyExternalStorage="true"
+        >
 
         <meta-data
             android:name="xposedmodule"
@@ -34,7 +39,7 @@
             android:name="xposedscope"
             android:resource="@array/xposed_scope" />
 
-        <activity android:name="com.blanke.mdwechat.settings.SettingsActivity">
+        <activity android:name="com.blanke.mdwechat.settings.SettingsActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="de.robv.android.xposed.category.MODULE_SETTINGS" />
@@ -45,13 +50,13 @@
             android:name="com.blanke.mdwechat.SettingsLauncher"
             android:enabled="true"
             android:targetActivity="com.blanke.mdwechat.settings.SettingsActivity">
-            <intent-filter>
+            <intent-filter >
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity-alias>
 
-        <activity android:name="com.blanke.mdwechat.markdown.MarkDownActivity" />
+        <activity android:name="com.blanke.mdwechat.markdown.MarkDownActivity"  />
     </application>
 
 </manifest>

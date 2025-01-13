@@ -3,7 +3,7 @@ package com.blanke.mdwechat.auto_search
 import android.content.Context
 import com.blanke.mdwechat.Version
 import com.blanke.mdwechat.auto_search.bean.OutputJson
-import com.blankj.utilcode.util.FileIOUtils
+//import com.blankj.utilcode.util.FileIOUtils
 import com.google.gson.Gson
 import dalvik.system.DexClassLoader
 import net.dongliu.apk.parser.ApkFile
@@ -178,8 +178,8 @@ class Main {
         val outputJson = OutputJson(classesMap, methodMap, fieldMap)
         val json = Gson().toJson(outputJson)
         val op = outputPath + "/${versionName}.config"
-        val succ = FileIOUtils.writeFileFromString(op, json)
-        Logs.i("保存到文件状态:${succ}，$op")
+        //val succ = FileIOUtils.writeFileFromString(op, json)
+        //Logs.i("保存到文件状态:${succ}，$op")
 
     }
 }

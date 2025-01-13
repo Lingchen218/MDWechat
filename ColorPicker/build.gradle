@@ -1,12 +1,22 @@
-apply plugin: 'com.android.library'
+plugins{
+  //kotlin("kapt")
+
+  alias(libs.plugins.android.library)
+
+}
 
 android {
-  compileSdkVersion 27
+  compileSdk = 28
   resourcePrefix "cpv_"
 
   defaultConfig {
-    minSdkVersion 14
-    targetSdkVersion 27
+    minSdk = 28
+    targetSdk = 28
+  }
+    namespace 'com.jaredrummler.android.colorpicker'
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_7
+    targetCompatibility JavaVersion.VERSION_1_7
   }
 }
 

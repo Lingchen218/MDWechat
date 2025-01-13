@@ -17,6 +17,7 @@ import android.view.WindowManager
 import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.blanke.mdwechat.Common
 import com.blanke.mdwechat.Version
 import com.blanke.mdwechat.auto_search.Main
@@ -25,10 +26,12 @@ import com.blanke.mdwechat.config.AppCustomConfig.getIconPath
 import com.blanke.mdwechat.markdown.MarkDownActivity
 import com.blanke.mdwechat.settings.view.DownloadWechatDialog
 import com.blanke.mdwechat.util.FileUtils
+import com.blanke.mdwechat.util.LogUtil
 import com.blanke.mdwechat.util.LogUtil.clearFileLogs
-import com.blankj.utilcode.util.FileUtils.isFileExists
-import com.blankj.utilcode.util.TimeUtils
-import com.blankj.utilcode.util.ToastUtils
+import com.blanke.mdwechat.util.LogUtil.log
+//import com.blankj.utilcode.util.FileUtils.isFileExists
+//import com.blankj.utilcode.util.TimeUtils
+//import com.blankj.utilcode.util.ToastUtils
 import com.jaredrummler.android.colorpicker.ColorPreference
 import com.joshcai.mdwechat.BuildConfig
 import com.joshcai.mdwechat.R
@@ -69,6 +72,9 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
     private fun getWechatPath(): String {
         try {
             val pm = activity.packageManager
+            if(pm == null){
+                LogUtil.log("xxxx")
+            }
             val ai = pm.getApplicationInfo(Common.WECHAT_PACKAGENAME, 0)
             return ai.publicSourceDir
         } catch (e: Exception) {
@@ -96,12 +102,14 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
         }
 
         try {
-            wxVersion = Version(ApkFile(getWechatPath()).apkMeta.versionName)
+            var test = ApkFile(getWechatPath()).apkMeta.versionName
+            wxVersion = Version(test)
         } catch (e: Exception) {
             e.printStackTrace()
-            ToastUtils.showShort(R.string.msg_wechat_notfound)
+            //ToastUtils.showShort(R.string.msg_wechat_notfound)
             generateWechatLogView?.append(getString(R.string.msg_wechat_notfound) + "\n\n")
             wxVersion = Version("999.999.999-unknown")
+            // 到这里会导致崩溃
         }
 
 
@@ -197,15 +205,15 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
 
     private fun setWechatConfigWarning() {
         val outputPath = Common.APP_DIR_PATH + Common.CONFIG_WECHAT_DIR + "/${wxVersion}.config"
-        if (!isFileExists(outputPath)) {
-            AlertDialog.Builder(activity)
+        //if (!isFileExists(outputPath)) {
+        //    AlertDialog.Builder(activity)
 //                    .setTitle("警告")
-                    .setMessage("未检测到微信适配文件，是否成微信适配文件？（可在通用 -> 微信适配文件中生成）")
-                    .setPositiveButton("朕同意了") { _, which -> generateWechatFile() }
-                    .setNegativeButton("不了", null)
-                    .setCancelable(true)
-                    .show()
-        }
+        //            .setMessage("未检测到微信适配文件，是否成微信适配文件？（可在通用 -> 微信适配文件中生成）")
+        //            .setPositiveButton("朕同意了") { _, which -> generateWechatFile() }
+         //           .setNegativeButton("不了", null)
+          //          .setCancelable(true)
+          //          .show()
+        //}
         showAppInfoDialog()
     }
 
@@ -620,7 +628,7 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
             Main().main(activity.applicationContext, getWechatPath(), outputPath)
         } catch (e: Exception) {
             e.printStackTrace()
-            ToastUtils.showShort(R.string.msg_wechat_notfound)
+            //ToastUtils.showShort(R.string.msg_wechat_notfound)
             generateWechatLogView?.append(getString(R.string.msg_wechat_notfound) + "\n\n")
         }
     }
@@ -759,22 +767,22 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
     private fun showAppInfoDialog() {
         val lastLaunchTime = preferenceManager.sharedPreferences.getLong("last_launch_time", -1)
         preferenceManager.sharedPreferences.edit().putLong("last_launch_time", System.currentTimeMillis()).apply()
-        if (lastLaunchTime > 0 && TimeUtils.isToday(lastLaunchTime)) {
-            return
-        }
-        val packageManager = activity.applicationContext.packageManager
-        val packageInfo = packageManager.getPackageInfo(BuildConfig.APPLICATION_ID, 0)
-        val firstInstallTime = Date(packageInfo.firstInstallTime)
-        val installDateStr = TimeUtils.getFitTimeSpan(Date(), firstInstallTime, 4)
-        val message = getString(R.string.text_app_desc) + "\n" + getString(R.string.text_app_donate, installDateStr)
-        AlertDialog.Builder(activity)
-                .setTitle(R.string.text_app_tips)
-                .setCancelable(true)
-                .setMessage(message)
-                .setPositiveButton(R.string.text_app_know, null)
-                .setNegativeButton(R.string.text_donate_wechat) { dialog, which -> donateWechat() }
-                .setNeutralButton(R.string.text_donate_alipay) { dialog, which -> donate() }
-                .show()
+//        if (lastLaunchTime > 0 && TimeUtils.isToday(lastLaunchTime)) {
+//            return
+//        }
+//        val packageManager = activity.applicationContext.packageManager
+//        val packageInfo = packageManager.getPackageInfo(BuildConfig.APPLICATION_ID, 0)
+//        val firstInstallTime = Date(packageInfo.firstInstallTime)
+//        val installDateStr = TimeUtils.getFitTimeSpan(Date(), firstInstallTime, 4)
+//        val message = getString(R.string.text_app_desc) + "\n" + getString(R.string.text_app_donate, installDateStr)
+//        AlertDialog.Builder(activity)
+//                .setTitle(R.string.text_app_tips)
+//                .setCancelable(true)
+//                .setMessage(message)
+//                .setPositiveButton(R.string.text_app_know, null)
+//                .setNegativeButton(R.string.text_donate_wechat) { dialog, which -> donateWechat() }
+//                .setNeutralButton(R.string.text_donate_alipay) { dialog, which -> donate() }
+//                .show()
     }
 
     override fun onDestroy() {

@@ -1,39 +1,54 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
+import com.android.build.gradle.internal.api.BaseVariantOutputImpl
 
+plugins{
+    //kotlin("kapt")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.jetbrains.kotlin.android)
+    //apply plugin: 'com.android.application'
+   // apply plugin: 'kotlin-android'
+}
 android {
-    compileSdkVersion 28
+    compileSdk = 30
 //    aaptOptions.cruncherEnabled = false
 //    aaptOptions.useNewCruncher = false
 
     defaultConfig {
         applicationId "com.joshcai.mdwechat"
-        minSdkVersion 21
-        targetSdkVersion 28
+        minSdk = 28
+        targetSdk = 30
         versionCode 108
         versionName "4.2.6"
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled  false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-    }
-    lintOptions {
-        checkReleaseBuilds false
-        abortOnError false
+        debug{
+            buildConfigField("boolean","LOG_DEBUG","true")
+        }
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    buildFeatures{
+        buildConfig = true
+    }
+    namespace 'com.joshcai.mdwechat'
+    lint {
+        abortOnError false
+        checkReleaseBuilds false
     }
 }
-
+//
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     //noinspection GradleCompatible
-    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.0.0+'
 //    implementation 'com.android.support:appcompat-v7:23.0.0'
 
     compileOnly 'de.robv.android.xposed:api:53'
@@ -43,18 +58,19 @@ dependencies {
     implementation project(':tablayout-lib')
     implementation project(':ColorPicker')
 
-    implementation 'com.google.code.gson:gson:2.8.4'
+    implementation 'com.google.code.gson:gson:2.8.4+'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
-    implementation 'com.github.Blankeer:rclayout:v1.6.0'
+    implementation 'com.github.Blankeer:rclayout:v1.6.0+'
 
-    implementation 'net.dongliu:apk-parser:2.5.3'
-    implementation 'com.blankj:utilcode:1.19.3'
-    implementation 'org.greenrobot:eventbus:3.1.1'
-    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
+    implementation 'net.dongliu:apk-parser:2.5.3+'
+    // implementation 'com.blankj:utilcode:1.19.3'
+    // implementation 'com.github.Blankj:AndroidUtilCode:1.30.0'
+    implementation 'org.greenrobot:eventbus:3.1.1+'
+    implementation 'com.squareup.okhttp3:okhttp:3.11.0+'
 
-    implementation 'ru.noties:markwon:1.1.0'
-    implementation 'ru.noties:markwon-image-loader:1.1.0'
+    implementation 'ru.noties:markwon:1.1.0+'
+    implementation 'ru.noties:markwon-image-loader:1.1.0+'
     implementation project(path: ':takephoto-lib')
 //    implementation 'org.jooq:jooq:3.12.4'
 }

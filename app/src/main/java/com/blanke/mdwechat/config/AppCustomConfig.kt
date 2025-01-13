@@ -8,7 +8,7 @@ import com.blanke.mdwechat.bean.PicPosition
 import com.blanke.mdwechat.bean.PicPositionConfig
 import com.blanke.mdwechat.util.BitmapUtil
 import com.blanke.mdwechat.util.LogUtil
-import com.blankj.utilcode.util.FileIOUtils
+//import com.blankj.utilcode.util.FileIOUtils
 import com.google.gson.Gson
 import java.io.File
 import java.io.FileInputStream
@@ -35,6 +35,7 @@ object AppCustomConfig {
     }
 
     fun getConfigFile(fileName: String): String {
+        LogUtil.log("xxxx "+ Common.APP_DIR_PATH + " fileName "+fileName)
         return Common.APP_DIR_PATH + Common.CONFIG_DIR + File.separator + fileName
     }
 
@@ -138,8 +139,8 @@ object AppCustomConfig {
                 "\n//提示：此文件自动生成，用于保存沉浸背景的图片位置信息。\n" +
                 "//Created by JoshCai"
         val op = getViewConfigFile(Common.FILE_NAME_PIC_POSITION)
-        val succ = FileIOUtils.writeFileFromString(op, json)
-        LogUtil.log("记录图片位置信息至文件:" + succ)
+        //val succ = FileIOUtils.writeFileFromString(op, json)
+        //LogUtil.log("记录图片位置信息至文件:" + succ)
     }
 
     fun getIconPath(fileName: String): String {

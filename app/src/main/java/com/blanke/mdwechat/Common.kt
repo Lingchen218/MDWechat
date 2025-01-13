@@ -4,6 +4,7 @@ import android.os.Environment
 import com.blanke.mdwechat.util.VXPUtils
 import com.joshcai.mdwechat.BuildConfig
 import java.io.File
+import com.blanke.mdwechat.util.LogUtil
 
 /**
  * Created by blanke on 2017/7/29.
@@ -47,7 +48,10 @@ object Common {
 //        val appDir = APP_DIR
 //            LogUtil.log("isVXPEnv = $isVXPEnv")
 //            LogUtil.log("app dir = $appDir")
-        Environment.getExternalStorageDirectory().absolutePath + File.separator + appDir + File.separator
+        var testss = Environment.getExternalStorageDirectory().absolutePath + File.separator + appDir + File.separator
+        "/storage/emulated/0/Android/data/com.joshcai.mdwechat/" + appDir + File.separator
+        //LogUtil.log("app dir = testss" + testss1)
+        //Environment.getExternalStorageDirectory().absolutePath + File.separator + appDir + File.separator
     }
 
 //    val URL_HELP_FLOAT_BUTTON = APP_DIR_PATH + File.separator + CONFIG_readme_DIR + File.separator + "floatbutton_readme.txt"

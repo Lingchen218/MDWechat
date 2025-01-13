@@ -1,5 +1,6 @@
 package com.blanke.mdwechat.settings
 
+//import com.blankj.utilcode.util.ToastUtils
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
@@ -8,23 +9,26 @@ import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+
 import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import android.view.View
 import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
+import android.Manifest
+
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.blanke.mdwechat.Common
 import com.blanke.mdwechat.config.AppCustomConfig
 import com.blanke.mdwechat.settings.api.APIManager
 import com.blanke.mdwechat.settings.bean.NewestVersionConfig
 import com.blanke.mdwechat.util.FileUtils
 import com.blanke.mdwechat.util.LogUtil
-import com.blankj.utilcode.util.ToastUtils
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.joshcai.mdwechat.R
@@ -63,7 +67,7 @@ class SettingsActivity : Activity() {
         APIManager().getNewestVersion(
                 object : Callback {
                     override fun onFailure(call: Call?, e: IOException?) {
-                        ToastUtils.showLong("获取最新版本失败," + e?.message)
+                        //ToastUtils.showLong("获取最新版本失败," + e?.message)
                     }
 
                     override fun onResponse(call: Call?, response: Response) {
@@ -121,6 +125,22 @@ class SettingsActivity : Activity() {
     }
 
     private fun copySharedPrefences() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            val REQUEST_CODE_CONTACT = 101
+            val permissions = arrayOf<String>(
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            )
+            //验证是否许可权限
+            for (str in permissions) {
+                if (this.checkSelfPermission(str) !== PackageManager.PERMISSION_GRANTED) {
+                    //申请权限
+                    this.requestPermissions(permissions, REQUEST_CODE_CONTACT)
+                    return
+                } else {
+                    //这里就是权限打开之后自己要操作的逻辑
+                }
+            }
+        }
         val sharedPrefsDir = File(filesDir, "../shared_prefs")
         val sharedPrefsFile = File(sharedPrefsDir, Common.MOD_PREFS + ".xml")
         val sdSPFile = File(AppCustomConfig.getConfigFile(Common.MOD_PREFS + ".xml"))

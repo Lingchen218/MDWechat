@@ -1,24 +1,30 @@
-apply plugin: 'com.android.library'
 
+plugins{
+    //kotlin("kapt")
+    // apply plugin: 'com.android.library'
+    alias(libs.plugins.android.library)
+
+}
 android {
-    compileSdkVersion 27
+    compileSdk = 28
 
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 27
-        versionCode 1
-        versionName '1.0'
+        minSdk = 28
+        targetSdk = 28
     }
     buildTypes {
         release {
             minifyEnabled false
-            debuggable false
         }
 
         debug {
             minifyEnabled false
-            debuggable true
         }
+    }
+    namespace 'com.github.clans.fab'
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
     }
 }
 
