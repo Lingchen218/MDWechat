@@ -1,5 +1,6 @@
 package com.blanke.mdwechat.config
 
+//import com.blankj.utilcode.util.FileIOUtils
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import com.blanke.mdwechat.Common
@@ -8,7 +9,6 @@ import com.blanke.mdwechat.bean.PicPosition
 import com.blanke.mdwechat.bean.PicPositionConfig
 import com.blanke.mdwechat.util.BitmapUtil
 import com.blanke.mdwechat.util.LogUtil
-//import com.blankj.utilcode.util.FileIOUtils
 import com.google.gson.Gson
 import java.io.File
 import java.io.FileInputStream
@@ -26,16 +26,39 @@ object AppCustomConfig {
 //        if (HookConfig.is_play) {
 //            configName = version + "-play.config"
 //        }
-        val `is` = FileInputStream(getWxConfigFile(configName))
+        var configfilename = getWxConfigFile(configName)
+
+        LogUtil.log("configfilename "+configfilename)
+
+
+        var `is` =  FileInputStream(configfilename)
+        LogUtil.log("end configfilename " )
+        if(fileIsExists(configfilename)){
+            LogUtil.log("wenjian cun zai " )
+        }else{
+            LogUtil.log("not wenjian  " )
+        }
+        // 需要用把文件拷贝到微信私有目录中才行
         return Gson().fromJson(InputStreamReader(`is`), WxVersionConfig::class.java)
     }
 
     fun getWxConfigFile(fileName: String): String {
-        return Common.APP_DIR_PATH + Common.CONFIG_WECHAT_DIR + File.separator + fileName
+        return Common.wx_APP_DIR_PATH + Common.CONFIG_WECHAT_DIR + File.separator + fileName
+    }
+
+      fun fileIsExists(strFile: String?): Boolean {
+        try {
+            val f = File(strFile)
+            if (!f.exists()) {
+                return false
+            }
+        } catch (e: java.lang.Exception) {
+            return false
+        }
+        return true
     }
 
     fun getConfigFile(fileName: String): String {
-        LogUtil.log("xxxx "+ Common.APP_DIR_PATH + " fileName "+fileName)
         return Common.APP_DIR_PATH + Common.CONFIG_DIR + File.separator + fileName
     }
 

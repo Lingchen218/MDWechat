@@ -1,9 +1,13 @@
 package com.blanke.mdwechat.auto_search
 
+//import com.blankj.utilcode.util.FileIOUtils
+
 import android.content.Context
+import android.content.pm.PackageManager
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.blanke.mdwechat.Version
 import com.blanke.mdwechat.auto_search.bean.OutputJson
-//import com.blankj.utilcode.util.FileIOUtils
 import com.google.gson.Gson
 import dalvik.system.DexClassLoader
 import net.dongliu.apk.parser.ApkFile

@@ -1,5 +1,6 @@
 package com.blanke.mdwechat
 
+import com.blanke.mdwechat.util.LogUtil
 import com.blanke.mdwechat.util.LogUtil.log
 import de.robv.android.xposed.XposedHelpers
 
@@ -7,8 +8,16 @@ object Classes {
     fun findClass(className: String?): Class<*>? {
         className ?: return null
         try {
-            return XposedHelpers.findClass(className, WechatGlobal.wxLoader)
+            if(WechatGlobal == null){
+                LogUtil.log(" WechatGlobal == null ")
+                return null
+            }else{
+
+                return XposedHelpers.findClass(className, WechatGlobal.wxLoader)
+            }
+
         } catch (e: Exception) {
+            LogUtil.log("$className = null")
             log("$className = null")
             return null
         }

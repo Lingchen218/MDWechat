@@ -24,12 +24,16 @@ object WechatGlobal {
 
     @JvmStatic
     fun init(lpparam: XC_LoadPackage.LoadPackageParam) {
+        LogUtil.log("init ddddd")
         wxPackageName = lpparam.packageName
+        LogUtil.log("init wxPackageName "+ wxPackageName)
         val context = XposedHelpers.callMethod(
                 XposedHelpers.callStaticMethod(XposedHelpers.findClass("android.app.ActivityThread", null),
                         "currentActivityThread"), "getSystemContext") as Context
+        LogUtil.log("XposedHelpers.callMethod "+ context.toString())
         wxVersion = Version(context.packageManager.getPackageInfo(wxPackageName, 0)?.versionName
                 ?: "")
+        LogUtil.log("Version(context.pa "+ wxVersion)
         wxLoader = lpparam.classLoader
     }
 

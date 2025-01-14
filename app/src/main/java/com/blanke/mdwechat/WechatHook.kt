@@ -1,5 +1,13 @@
 package com.blanke.mdwechat
 
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
+import android.os.Environment
+import android.provider.Settings
+import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat.startActivityForResult
 import com.blanke.mdwechat.Common.isVXPEnv
 import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.config.ViewTreeConfig
@@ -10,6 +18,7 @@ import com.blanke.mdwechat.hookers.base.HookerProvider
 import com.blanke.mdwechat.util.LogUtil
 import com.blanke.mdwechat.util.LogUtil.log
 import com.blanke.mdwechat.util.waitInvoke
+import com.darsh.multipleimageselect.helpers.Constants
 import com.joshcai.mdwechat.BuildConfig
 import de.robv.android.xposed.IXposedHookLoadPackage
 import de.robv.android.xposed.callbacks.XC_LoadPackage
@@ -75,9 +84,12 @@ class WechatHook : IXposedHookLoadPackage {
     private fun hookMain(lpparam: XC_LoadPackage.LoadPackageParam, preloadHooker: Hooker, plugins: List<HookerProvider>) {
         enableHookers(listOf(ContextHooker))
         WechatGlobal.init(lpparam)
+
         try {
             WechatGlobal.wxVersionConfig = WxVersionConfig.loadConfig(WechatGlobal.wxVersion!!.toString())
+            LogUtil.log("config load success")
             preloadHooker.hook()
+            LogUtil.log(" hook success")
             ViewTreeConfig.set(WechatGlobal.wxVersion!!)
         } catch (e: Exception) {
             waitInvoke(100, true,

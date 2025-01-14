@@ -1,6 +1,8 @@
 package com.blanke.mdwechat.settings
 
 //import com.blankj.utilcode.util.ToastUtils
+
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
@@ -11,7 +13,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-
+import android.os.Environment
 import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
@@ -19,8 +21,7 @@ import android.view.View
 import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
-import android.Manifest
-
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.blanke.mdwechat.Common
@@ -29,6 +30,7 @@ import com.blanke.mdwechat.settings.api.APIManager
 import com.blanke.mdwechat.settings.bean.NewestVersionConfig
 import com.blanke.mdwechat.util.FileUtils
 import com.blanke.mdwechat.util.LogUtil
+import com.darsh.multipleimageselect.helpers.Constants.REQUEST_CODE
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.joshcai.mdwechat.R
@@ -125,22 +127,7 @@ class SettingsActivity : Activity() {
     }
 
     private fun copySharedPrefences() {
-        if (Build.VERSION.SDK_INT >= 23) {
-            val REQUEST_CODE_CONTACT = 101
-            val permissions = arrayOf<String>(
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            )
-            //验证是否许可权限
-            for (str in permissions) {
-                if (this.checkSelfPermission(str) !== PackageManager.PERMISSION_GRANTED) {
-                    //申请权限
-                    this.requestPermissions(permissions, REQUEST_CODE_CONTACT)
-                    return
-                } else {
-                    //这里就是权限打开之后自己要操作的逻辑
-                }
-            }
-        }
+
         val sharedPrefsDir = File(filesDir, "../shared_prefs")
         val sharedPrefsFile = File(sharedPrefsDir, Common.MOD_PREFS + ".xml")
         val sdSPFile = File(AppCustomConfig.getConfigFile(Common.MOD_PREFS + ".xml"))
@@ -179,24 +166,25 @@ class SettingsActivity : Activity() {
     }
 
     private val REQUEST_EXTERNAL_STORAGE = 1
-    private val PERMISSIONS_STORAGE = arrayOf(
-            "android.permission.READ_EXTERNAL_STORAGE",
-            "android.permission.WRITE_EXTERNAL_STORAGE")
 
+    @RequiresApi(Build.VERSION_CODES.R)
     fun verifyStoragePermissions(activity: Activity) {
-        try {
-            val permission = ActivityCompat.checkSelfPermission(activity,
-                    "android.permission.WRITE_EXTERNAL_STORAGE") == PackageManager.PERMISSION_GRANTED
-//                    && ActivityCompat.checkSelfPermission(activity,
-//                    "android.permission.CAMERA") == PackageManager.PERMISSION_GRANTED
-            if (!permission) {
-                ActivityCompat.requestPermissions(activity, PERMISSIONS_STORAGE, REQUEST_EXTERNAL_STORAGE)
-            } else {
-                copyConfig()
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
+        // 判断是否已经授予权限
+        // 判断是否已经授予权限
+        if (Environment.isExternalStorageManager()) {
+            Toast.makeText(this, "已授予 MANAGE_EXTERNAL_STORAGE 权限", Toast.LENGTH_LONG)
+                .show()
+            copyConfig()
+        } else {
+            Toast.makeText(this, "未授予 MANAGE_EXTERNAL_STORAGE 权限", Toast.LENGTH_LONG)
+                .show()
+            // 引导用户到系统设置中手动授予权限
+            val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
+            intent.setData(Uri.parse("package:" + this.packageName))
+            startActivityForResult(intent, REQUEST_CODE)
         }
+
+
     }
 
     override fun onRequestPermissionsResult(requestCode: Int,
