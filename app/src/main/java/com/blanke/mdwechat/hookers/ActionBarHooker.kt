@@ -19,6 +19,7 @@ import de.robv.android.xposed.XposedHelpers
 object ActionBarHooker : HookerProvider {
 
     override fun provideStaticHookers(): List<Hooker>? {
+        LogUtil.log("x ActionBarHooker")
         val list = mutableListOf(actionBarHooker)
         if (!HookConfig.is_hook_hide_actionbar) {
             list.add(mainPageActionBarHooker)

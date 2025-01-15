@@ -42,6 +42,20 @@ object LogUtil {
         FileUtils.write(logFile.absolutePath, "$time $log\n", true)
 
     }
+    fun exportLog_wx(log: String) {
+        try {
+            if (HookConfig.is_hook_log_xposed) {
+                XposedBridge.log("MDWechatModule: " + log)
+                return
+            }
+        } catch (e: Exception) {
+        }
+        val logFile = File(AppCustomConfig.getLogFile_wx(dateStr))
+        logFile.parentFile.mkdirs()
+        val time = SimpleDateFormat("HH:mm:ss").format(Date())
+        FileUtils.write(logFile.absolutePath, "$time $log\n", true)
+
+    }
 
     fun clearFileLogs(isLogFile: Boolean = false) {
         val logFile = File(AppCustomConfig.getLogFile("MDWechat_log")).parentFile
@@ -70,7 +84,7 @@ object LogUtil {
     @JvmStatic
     fun log(msg: String) {
         try {
-            if (HookConfig.is_hook_log) exportLog("MDwechat Log: " + msg)
+            if (HookConfig.is_hook_log) exportLog_wx("MDwechat Log: " + msg)
         } catch (e: RuntimeException) {
         }
         Log.i("MDWechatModule", "MDWechat $msg")

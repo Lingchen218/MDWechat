@@ -69,7 +69,7 @@ class WechatHook : IXposedHookLoadPackage {
 //            hookers.forEach {
 //                log(it::class.java.name)
 //            }
-            LogUtil.logStackTraces()
+            // LogUtil.logStackTraces()
 //            //endregion
 
             if ((!isVXPEnv) && (HookConfig.is_hook_debug || HookConfig.is_hook_debug2)) {

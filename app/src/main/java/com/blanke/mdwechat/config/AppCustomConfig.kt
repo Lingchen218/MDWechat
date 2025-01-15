@@ -69,6 +69,9 @@ object AppCustomConfig {
     fun getLogFile(date: String): String {
         return Common.APP_DIR_PATH + Common.LOGS_DIR + File.separator + "MDWechat_log_$date.txt"
     }
+    fun getLogFile_wx(date: String): String {
+        return Common.wx_APP_DIR_PATH + Common.LOGS_DIR + File.separator + "MDWechat_log_$date.txt"
+    }
 
     fun getTabIcon(index: Int): Bitmap? {
         return getScaleBitmap(getIcon(Common.FILE_NAME_TAB_PREFIX + "$index.png"))

@@ -251,10 +251,15 @@ object Classes {
     val ActionMenuView: Class<*>?
         get() {
             var clazzes = ReflectionUtil.findClassesFromPackage(WechatGlobal.wxLoader, WechatGlobal.wxClasses, "android.support.v7.view.menu")
-            //wx8.0.3
-            if (clazzes.classes.size == 0) {
+// 高版本写前面
+            if ((WechatGlobal.wxVersion!! >= Version("8.0.55")) && clazzes.classes.size == 0) {
+                clazzes = ReflectionUtil.findClassesFromPackage(WechatGlobal.wxLoader, WechatGlobal.wxClasses, "k0")
+            }
+
+            if ((WechatGlobal.wxVersion!! >= Version("8.0.3")) && clazzes.classes.size == 0) {
                 clazzes = ReflectionUtil.findClassesFromPackage(WechatGlobal.wxLoader, WechatGlobal.wxClasses, "androidx.appcompat.view.menu")
             }
+
             return clazzes
                     .filterByField(CharSequence::class.java.name)
                     .filterByField(Drawable::class.java.name)

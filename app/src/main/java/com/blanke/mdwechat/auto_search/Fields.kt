@@ -44,6 +44,11 @@ object Fields {
                 fields = findFieldsWithType(
                         HomeUI!!, "androidx.appcompat.app.ActionBar")
             }
+
+            if (fields.size == 0){
+                fields = findFieldsWithType(
+                    HomeUI!!, "androidx.appcompat.app.b")
+            }
             return fields.firstOrNull()?.apply { isAccessible = true }
         }
 
