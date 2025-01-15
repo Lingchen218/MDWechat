@@ -45,13 +45,8 @@ object Common {
     val APP_DIR_PATH: String by lazy {
         //         debug VXP 环境下，区分目录
         val appDir = if (isVXPEnv && BuildConfig.DEBUG) APP_VXP_DIR else APP_DIR
-//        val appDir = APP_DIR
-//            LogUtil.log("isVXPEnv = $isVXPEnv")
-//            LogUtil.log("app dir = $appDir")
-        var testss = Environment.getExternalStorageDirectory().absolutePath + File.separator + appDir + File.separator
-        //"/storage/emulated/0/Android/data/com.joshcai.mdwechat/" + appDir + File.separator
-        //LogUtil.log("app dir = testss" + testss1)
-        Environment.getExternalStorageDirectory().absolutePath + File.separator + appDir + File.separator
+
+        Environment.getExternalStorageDirectory().absolutePath + File.separator + "Android/data/com.joshcai.mdwechat/" + appDir + File.separator
     }
     val wx_APP_DIR_PATH: String by lazy {
         //         debug VXP 环境下，区分目录
