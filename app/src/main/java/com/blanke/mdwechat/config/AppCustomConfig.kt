@@ -28,16 +28,9 @@ object AppCustomConfig {
 //        }
         var configfilename = getWxConfigFile(configName)
 
-        LogUtil.log("configfilename "+configfilename)
-
 
         var `is` =  FileInputStream(configfilename)
-        LogUtil.log("end configfilename " )
-        if(fileIsExists(configfilename)){
-            LogUtil.log("wenjian cun zai " )
-        }else{
-            LogUtil.log("not wenjian  " )
-        }
+
         // 需要用把文件拷贝到微信私有目录中才行
         return Gson().fromJson(InputStreamReader(`is`), WxVersionConfig::class.java)
     }

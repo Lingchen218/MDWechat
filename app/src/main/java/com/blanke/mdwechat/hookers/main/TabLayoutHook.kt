@@ -69,7 +69,8 @@ object TabLayoutHook {
                     try {
                         Methods.WxViewPager_selectedPage.invoke(this, position, false, false, 0)
                     } catch (e: Exception) {
-                        LogUtil.log(e)
+                        // 这里是目标进程的classloader 需要使用目标进程目录
+                        // LogUtil.log(e)
                     }
                 }
             }

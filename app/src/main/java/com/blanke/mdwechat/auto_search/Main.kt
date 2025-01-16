@@ -6,8 +6,11 @@ import android.content.Context
 import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.blanke.mdwechat.Common
 import com.blanke.mdwechat.Version
 import com.blanke.mdwechat.auto_search.bean.OutputJson
+import com.blanke.mdwechat.util.FileUtils
+import com.blanke.mdwechat.util.LogUtil
 import com.google.gson.Gson
 import dalvik.system.DexClassLoader
 import net.dongliu.apk.parser.ApkFile
@@ -183,7 +186,13 @@ class Main {
         val json = Gson().toJson(outputJson)
         val op = outputPath + "/${versionName}.config"
         val succ = FileIOUtils.writeFileFromString(op, json)
-        //Logs.i("保存到文件状态:${succ}，$op")
+
+        thread {
+            // val outputPath = Common.APP_DIR_PATH + Common.CONFIG_WECHAT_DIR
+            // 尝试把 配置文件拷贝到微信私有目录中，可能失败了
+            FileUtils.copyAssets(context.applicationContext, Common.wx_APP_DIR_PATH,Common.APP_DIR_PATH , true)
+        }
+        Logs.i("保存到文件状态:${succ}，$op")
 
     }
 }
