@@ -1,6 +1,6 @@
 package com.blanke.mdwechat.settings
 
-//import com.blankj.utilcode.util.ToastUtils
+import com.blankj.utilcode.util.ToastUtils
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -71,7 +71,7 @@ class SettingsActivity : Activity() {
         APIManager().getNewestVersion(
                 object : Callback {
                     override fun onFailure(call: Call?, e: IOException?) {
-                        //ToastUtils.showLong("获取最新版本失败," + e?.message)
+                        ToastUtils.showLong("获取最新版本失败," + e?.message)
                     }
 
                     override fun onResponse(call: Call?, response: Response) {
