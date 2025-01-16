@@ -1,6 +1,6 @@
 package com.blanke.mdwechat.auto_search
 
-//import com.blankj.utilcode.util.FileIOUtils
+import com.blankj.utilcode.util.FileIOUtils
 
 import android.content.Context
 import android.content.pm.PackageManager
@@ -182,7 +182,7 @@ class Main {
         val outputJson = OutputJson(classesMap, methodMap, fieldMap)
         val json = Gson().toJson(outputJson)
         val op = outputPath + "/${versionName}.config"
-        //val succ = FileIOUtils.writeFileFromString(op, json)
+        val succ = FileIOUtils.writeFileFromString(op, json)
         //Logs.i("保存到文件状态:${succ}，$op")
 
     }

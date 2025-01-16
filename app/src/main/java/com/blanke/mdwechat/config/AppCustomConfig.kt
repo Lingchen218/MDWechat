@@ -1,6 +1,6 @@
 package com.blanke.mdwechat.config
 
-//import com.blankj.utilcode.util.FileIOUtils
+import com.blankj.utilcode.util.FileIOUtils
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import com.blanke.mdwechat.Common
@@ -170,7 +170,7 @@ object AppCustomConfig {
     }
 
     fun getIconPath(fileName: String): String {
-        return Common.APP_DIR_PATH + Common.ICON_DIR + File.separator + fileName
+        return Common.wx_APP_DIR_PATH + Common.ICON_DIR + File.separator + fileName
     }
 
     fun getIcon(fileName: String): Bitmap? {

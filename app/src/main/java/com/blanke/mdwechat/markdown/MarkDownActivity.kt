@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
-//import com.blankj.utilcode.util.ToastUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.joshcai.mdwechat.R
 import ru.noties.markwon.Markwon
 import ru.noties.markwon.SpannableConfiguration
@@ -58,7 +58,7 @@ class MarkDownActivity : Activity() {
             Markwon.setMarkdown(markdownView, config, result)
 
         } catch (e: Exception) {
-            //ToastUtils.showShort("加载失败：" + e.message)
+            ToastUtils.showShort("加载失败：" + e.message)
             finish()
         }
 //        APIManager().get(url, object : Callback {

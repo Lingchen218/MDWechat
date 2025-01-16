@@ -52,6 +52,8 @@ class SettingsActivity : Activity() {
     private lateinit var fab: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        getExternalFilesDir(null);
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
         Common.APP_DIR_PATH
@@ -134,6 +136,9 @@ class SettingsActivity : Activity() {
         SettingsFragment.STATIC.sharedPrefsFile = sharedPrefsFile
         SettingsFragment.STATIC.sdSPFile = sdSPFile
         if (sharedPrefsFile.exists()) {
+            if(!sdSPFile.exists()){
+                sdSPFile.createNewFile()
+            }
             val outStream = FileOutputStream(sdSPFile)
             FileUtils.copyFile(FileInputStream(sharedPrefsFile), outStream)
         } else if (sdSPFile.exists()) { // restore sharedPrefsFile

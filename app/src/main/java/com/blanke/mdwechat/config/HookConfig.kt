@@ -4,7 +4,7 @@ import android.graphics.Color
 import com.blanke.mdwechat.Version
 import com.blanke.mdwechat.WeChatHelper
 import com.blanke.mdwechat.WechatGlobal
-//import com.blankj.utilcode.util.BarUtils
+import com.blankj.utilcode.util.BarUtils
 import com.joshcai.mdwechat.BuildConfig
 
 /**
@@ -463,8 +463,7 @@ object HookConfig {
 //        get() {
 //            return WeChatHelper.XMOD_PREFS.getString(key_mini_program_title, "点击收起")
 //        }
-    val statusBarHeight = 0
-//    val statusBarHeight: Int by lazy {
-//        //BarUtils.getStatusBarHeight()
-//    }
+    val statusBarHeight: Int by lazy {
+        BarUtils.getStatusBarHeight()
+    }
 }

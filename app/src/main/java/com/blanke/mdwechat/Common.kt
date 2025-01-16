@@ -47,6 +47,9 @@ object Common {
         val appDir = if (isVXPEnv && BuildConfig.DEBUG) APP_VXP_DIR else APP_DIR
 
         Environment.getExternalStorageDirectory().absolutePath + File.separator + "Android/data/com.joshcai.mdwechat/" + appDir + File.separator
+        //LogUtil.log(Environment.getDataDirectory().absolutePath)
+
+        //Environment.getDataDirectory().absolutePath+File.separator+ appDir + File.separator
     }
     val wx_APP_DIR_PATH: String by lazy {
         //         debug VXP 环境下，区分目录

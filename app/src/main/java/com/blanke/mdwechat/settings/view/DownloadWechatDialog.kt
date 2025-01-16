@@ -8,8 +8,8 @@ import android.widget.SimpleAdapter
 import com.blanke.mdwechat.Common
 import com.blanke.mdwechat.settings.api.APIManager
 import com.blanke.mdwechat.settings.bean.WechatConfig
-//import com.blankj.utilcode.util.FileIOUtils
-//import com.blankj.utilcode.util.ToastUtils
+import com.blankj.utilcode.util.FileIOUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.joshcai.mdwechat.R

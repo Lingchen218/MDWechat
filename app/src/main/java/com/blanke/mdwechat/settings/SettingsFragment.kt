@@ -29,9 +29,9 @@ import com.blanke.mdwechat.util.FileUtils
 import com.blanke.mdwechat.util.LogUtil
 import com.blanke.mdwechat.util.LogUtil.clearFileLogs
 import com.blanke.mdwechat.util.LogUtil.log
-//import com.blankj.utilcode.util.FileUtils.isFileExists
-//import com.blankj.utilcode.util.TimeUtils
-//import com.blankj.utilcode.util.ToastUtils
+import com.blankj.utilcode.util.FileUtils.isFileExists
+import com.blankj.utilcode.util.TimeUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.jaredrummler.android.colorpicker.ColorPreference
 import com.joshcai.mdwechat.BuildConfig
 import com.joshcai.mdwechat.R
