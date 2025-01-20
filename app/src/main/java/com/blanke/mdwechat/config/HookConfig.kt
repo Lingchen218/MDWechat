@@ -241,7 +241,8 @@ object HookConfig {
         }
     val is_key_hide_tab: Boolean
         get() {
-            return WeChatHelper.XMOD_PREFS.getBoolean(key_hide_tab, true)
+            // 此处读取配置文件失败，待修复
+            return WeChatHelper.XMOD_PREFS.getBoolean(key_hide_tab, false)
         }
     val is_hook_tab_bg: Boolean
         get() {

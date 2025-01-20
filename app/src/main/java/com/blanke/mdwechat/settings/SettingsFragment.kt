@@ -204,8 +204,9 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
     }
 
     private fun setWechatConfigWarning() {
-        val outputPath = Common.APP_DIR_PATH + Common.CONFIG_WECHAT_DIR + "/${wxVersion}.config"
-        if (!isFileExists(outputPath)) {
+        val outputPath = Common.wx_APP_DIR_PATH + Common.CONFIG_WECHAT_DIR + "/${wxVersion}.config"
+        val outputfile = File(outputPath)
+        if (!isFileExists(outputfile)) {
             AlertDialog.Builder(activity)
                     .setTitle("警告")
                     .setMessage("未检测到微信适配文件，是否成微信适配文件？（可在通用 -> 微信适配文件中生成）")
