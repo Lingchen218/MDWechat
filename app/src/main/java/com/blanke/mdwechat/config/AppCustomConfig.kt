@@ -54,6 +54,9 @@ object AppCustomConfig {
     fun getConfigFile(fileName: String): String {
         return Common.APP_DIR_PATH + Common.CONFIG_DIR + File.separator + fileName
     }
+    fun getwxConfigFile(fileName: String): String {
+        return Common.wx_APP_DIR_PATH + Common.CONFIG_DIR + File.separator + fileName
+    }
 
     fun getViewConfigFile(fileName: String): String {
         return Common.APP_DIR_PATH + Common.CONFIG_VIEW_DIR + File.separator + fileName

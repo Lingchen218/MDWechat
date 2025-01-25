@@ -58,8 +58,8 @@ dependencies {
     implementation project(':fab-lib')
     implementation project(':tablayout-lib')
     implementation project(':ColorPicker')
-
-    implementation 'com.google.code.gson:gson:2.8.4+'
+    implementation "androidx.documentfile:documentfile:1.0.1"
+    implementation 'com.google.code.gson:gson:2.8.4'
     //implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
     implementation 'com.github.Blankeer:rclayout:v1.6.0+'
