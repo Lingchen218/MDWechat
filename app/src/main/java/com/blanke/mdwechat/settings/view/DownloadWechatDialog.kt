@@ -60,7 +60,7 @@ object DownloadWechatDialog {
                                 val item = data[position]
                                 APIManager().downloadWechatConfig(item.url, object : Callback {
                                     override fun onFailure(call: Call?, e: IOException?) {
-                                        //ToastUtils.showLong("下载微信配置文件失败," + e?.message)
+                                        ToastUtils.showLong("下载微信配置文件失败," + e?.message)
                                     }
 
                                     override fun onResponse(call: Call?, response: Response) {

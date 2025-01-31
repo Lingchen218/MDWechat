@@ -12,6 +12,7 @@ import com.blanke.mdwechat.config.AppCustomConfig
 import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.util.ColorUtils
 import com.blanke.mdwechat.util.DrawableUtils
+import com.blanke.mdwechat.util.LogUtil
 import com.blanke.mdwechat.util.NightModeUtils.colorPrimary
 import de.robv.android.xposed.XSharedPreferences
 import java.io.File
@@ -150,9 +151,17 @@ object WeChatHelper {
     }
 
     fun initPrefs() {
-        XMOD_PREFS = XSharedPreferences(File(AppCustomConfig.getConfigFile(Common.MOD_PREFS + ".xml")))
-        XMOD_PREFS.makeWorldReadable()
-        XMOD_PREFS.reload()
+        // 这块是微信的classloader
+        var filepath = AppCustomConfig.getwxConfigFile(Common.MOD_PREFS + ".xml")
+        var FileMOD_PREFS = File(filepath)
+        if(FileMOD_PREFS.exists() && FileMOD_PREFS.isFile()){
+            XMOD_PREFS = XSharedPreferences(FileMOD_PREFS)
+            XMOD_PREFS.makeWorldReadable()
+            XMOD_PREFS.reload()
+        }else{
+            LogUtil.log("文件不存在:" + FileMOD_PREFS.absolutePath)
+        }
+
     }
 
     fun reloadPrefs() {

@@ -1,13 +1,6 @@
 package com.blanke.mdwechat
 
-import android.content.Intent
-import android.net.Uri
-import android.os.Build
-import android.os.Environment
-import android.provider.Settings
-import android.widget.Toast
-import androidx.annotation.RequiresApi
-import androidx.core.app.ActivityCompat.startActivityForResult
+import android.R.attr.classLoader
 import com.blanke.mdwechat.Common.isVXPEnv
 import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.config.ViewTreeConfig
@@ -18,10 +11,14 @@ import com.blanke.mdwechat.hookers.base.HookerProvider
 import com.blanke.mdwechat.util.LogUtil
 import com.blanke.mdwechat.util.LogUtil.log
 import com.blanke.mdwechat.util.waitInvoke
-import com.darsh.multipleimageselect.helpers.Constants
 import com.joshcai.mdwechat.BuildConfig
 import de.robv.android.xposed.IXposedHookLoadPackage
+import de.robv.android.xposed.XC_MethodHook
+import de.robv.android.xposed.XposedBridge
+import de.robv.android.xposed.XposedHelpers
 import de.robv.android.xposed.callbacks.XC_LoadPackage
+import java.io.File
+
 
 class WechatHook : IXposedHookLoadPackage {
 
@@ -29,6 +26,150 @@ class WechatHook : IXposedHookLoadPackage {
     override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackageParam) {
         try {
             log(lpparam.packageName)
+            if(lpparam.packageName.equals("com.finaccel.android")){
+
+
+                var appsealingcall = XposedHelpers.findClass("com.inka.appsealing.AppSealingReport", lpparam.classLoader)
+
+
+
+
+                // java.io.FileSystem
+                // createFileExclusively
+                XposedBridge.hookAllMethods(appsealingcall,"sendReportFile",object : XC_MethodHook() {
+                    override fun beforeHookedMethod(param: MethodHookParam) {
+                        val msg = param.args[1] as File
+                        LogUtil.log("xxxxd beforeHookedMethod showAlertDialog " + msg.absolutePath    )
+                        if(msg.exists() && msg.canRead()){
+                            LogUtil.log("before msg.readText " + msg.readText())
+                        }
+                    }
+
+                    override fun afterHookedMethod(param: MethodHookParam) {
+                        val msg = param.args[1] as File
+
+                        // val msg1 = param.args[1] as String
+                        // val actionBar = param.thisObject as View
+
+                        // var res = param.result as String
+                        //LogUtil.log("msg.exists " + msg.exists())
+                        //LogUtil.log("msg.canRead " + msg.canRead())
+
+                        //LogUtil.log("xxxxd afterHookedMethod showAlertDialog " + msg.absolutePath    )
+                    }
+
+                })
+
+                XposedBridge.hookAllMethods(appsealingcall,"sendReport",object : XC_MethodHook() {
+                    override fun beforeHookedMethod(param: MethodHookParam) {
+                        val msg = param.args[1] as String
+                        val file = File(msg)
+                        if(file.exists()){
+                            if(! file.isDirectory()){
+
+                                LogUtil.log("xxxxd beforeHookedMethod sendReport " + file.readText()    )
+                                // printstackTrace()
+                            }
+                        }
+
+//                        if(msg.exists() && msg.canRead()){
+//                            LogUtil.log("before msg.readText " + msg.readText())
+//                        }
+                    }
+
+                    override fun afterHookedMethod(param: MethodHookParam) {
+                        val msg = param.args[1] as String
+
+                        // val msg1 = param.args[1] as String
+                        // val actionBar = param.thisObject as View
+
+                        // var res = param.result as String
+                        //LogUtil.log("msg.exists " + msg.exists())
+                        //LogUtil.log("msg.canRead " + msg.canRead())
+
+                        //LogUtil.log("xxxxd afterHookedMethod showAlertDialog " + msg.absolutePath    )
+                    }
+
+                })
+
+                XposedBridge.hookAllMethods(appsealingcall,"requestSendReportFolder",object : XC_MethodHook() {
+                    override fun beforeHookedMethod(param: MethodHookParam) {
+                        val file = param.args[0] as File
+                        //val file = File(msg)
+                        if(file.exists()){
+                            if(! file.isDirectory()){
+
+                                LogUtil.log("xxxxd beforeHookedMethod requestSendReportFolder " + file.readText()    )
+                                // printstackTrace()
+                            }
+                        }
+
+//                        if(msg.exists() && msg.canRead()){
+//                            LogUtil.log("before msg.readText " + msg.readText())
+//                        }
+                    }
+
+                    override fun afterHookedMethod(param: MethodHookParam) {
+                        val msg = param.args[0] as File
+
+                        // val msg1 = param.args[1] as String
+                        // val actionBar = param.thisObject as View
+
+                        // var res = param.result as String
+                        //LogUtil.log("msg.exists " + msg.exists())
+                        //LogUtil.log("msg.canRead " + msg.canRead())
+
+                        //LogUtil.log("xxxxd afterHookedMethod showAlertDialog " + msg.absolutePath    )
+                    }
+
+                })
+
+
+                XposedBridge.hookAllMethods(appsealingcall,"prepareReportFolders",object : XC_MethodHook() {
+                    override fun beforeHookedMethod(param: MethodHookParam) {
+                        // val file = param.args[0] as File
+                        val file = param.thisObject
+                        val currentProcessName = XposedHelpers.getObjectField(file,"currentProcessName") as String
+                        val patt =  "/data/user/0/com.finaccel.android/.sealing_reports/com_finaccel_android"
+                        val files = String.format("%s/%s",patt,currentProcessName)
+                        LogUtil.log("ddfdfd beforeHookedMethod prepareReportFolders " + files)
+
+                    }
+
+                    override fun afterHookedMethod(param: MethodHookParam) {
+                        // val msg = param.args[0] as File
+
+                        // val msg1 = param.args[1] as String
+                        // val actionBar = param.thisObject as View
+
+                        // var res = param.result as String
+                        //LogUtil.log("msg.exists " + msg.exists())
+                        //LogUtil.log("msg.canRead " + msg.canRead())
+
+                        //LogUtil.log("xxxxd afterHookedMethod showAlertDialog " + msg.absolutePath    )
+                    }
+
+                })
+
+//                var appsealingcall2 = XposedHelpers.findClass("com.inka.appsealing.AppSealingReport$ReportObserver", lpparam.classLoader)
+//                XposedHelpers.findAndHookConstructor(appsealingcall2,String::class.java,object : XC_MethodHook() {
+//                    override fun beforeHookedMethod(param: MethodHookParam) {
+//                         val file = param.args[0] as String
+//                        LogUtil.log("file findAndHookConstructor" + file)
+////                       val file = param.thisObject
+//
+//                    }
+//
+//                    override fun afterHookedMethod(param: MethodHookParam) {
+//                        // val msg = param.args[0] as File
+//                    }
+//
+//                })
+//
+            }
+
+
+
             if (!(lpparam.packageName.contains("com.tencent") && lpparam.packageName.contains("mm")))
                 return
             // 暂时不 hook 小程序
@@ -113,7 +254,13 @@ class WechatHook : IXposedHookLoadPackage {
             enableHookers(plugins)
         }
     }
-
+    fun printstackTrace(){
+        val stackTrace = Thread.currentThread().stackTrace
+        for (element in stackTrace) {
+            //println(element)
+            LogUtil.log("beforeHookedMethod stackTrace" + element.toString())
+        }
+    }
     fun enableHookers(plugins: List<HookerProvider>) {
         plugins.forEach { provider ->
             provider.provideStaticHookers()?.forEach { hooker ->

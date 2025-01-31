@@ -102,14 +102,13 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
         }
 
         try {
-            var test = ApkFile(getWechatPath()).apkMeta.versionName
-            wxVersion = Version(test)
+            val versionName = ApkFile(getWechatPath()).apkMeta.versionName
+            wxVersion = Version(versionName)
         } catch (e: Exception) {
             e.printStackTrace()
-            //ToastUtils.showShort(R.string.msg_wechat_notfound)
+            ToastUtils.showShort(R.string.msg_wechat_notfound)
             generateWechatLogView?.append(getString(R.string.msg_wechat_notfound) + "\n\n")
             wxVersion = Version("999.999.999-unknown")
-            // 到这里会导致崩溃
         }
 
 
